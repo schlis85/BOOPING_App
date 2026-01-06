@@ -11,7 +11,7 @@ from flask import Flask
 from flask_socketio import SocketIO
 from flask_login import LoginManager
 from config import Config
-from database.db import init_db
+from database.db import init_db, check_db_initialized
 
 # Initialize extensions
 socketio = SocketIO()
@@ -46,10 +46,9 @@ def create_app():
     from socket_events.boop_events import register_socket_events
     register_socket_events(socketio)
 
-    # Initialize database if it doesn't exist
-    db_path = os.path.join(os.path.dirname(__file__), 'database', 'booping.db')
-    if not os.path.exists(db_path):
-        with app.app_context():
+    # Initialize database if tables don't exist
+    with app.app_context():
+        if not check_db_initialized():
             init_db()
             print("Database initialized!")
 
