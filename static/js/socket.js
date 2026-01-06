@@ -21,6 +21,9 @@ function initSocket() {
         if (data.global_stats) {
             updateGlobalCounter(data.global_stats.total_boops);
         }
+        // Also refresh via API as fallback
+        loadGlobalStats();
+        loadMyStats();
     });
 
     socket.on('boop_sent', (data) => {

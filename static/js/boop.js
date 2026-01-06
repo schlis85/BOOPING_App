@@ -238,8 +238,9 @@ function sendBoop(recipientId, button) {
     // Send via socket (server uses current_user's paw_style)
     sendBoopViaSocket(recipientId);
 
-    // Update my stats
+    // Update stats (both personal and global)
     loadMyStats();
+    loadGlobalStats();
 }
 
 // Create flying paw animation
