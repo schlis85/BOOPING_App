@@ -22,18 +22,14 @@ function initSocket() {
     socket.on('boop_sent', (data) => {
         if (data.success) {
             console.log('Boop sent successfully!');
+            // Update global counter from response
+            if (data.global_stats) {
+                updateGlobalCounter(data.global_stats.total_boops);
+            }
         }
         if (data.new_badges && data.new_badges.length > 0) {
             data.new_badges.forEach(badge => showBadgeUnlock(badge));
         }
-    });
-
-    socket.on('badges_unlocked', (data) => {
-        data.badges.forEach(badge => showBadgeUnlock(badge));
-    });
-
-    socket.on('global_stats_update', (stats) => {
-        updateGlobalCounter(stats.total_boops);
     });
 }
 

@@ -52,9 +52,21 @@ class User(UserMixin):
         return User.from_row(row)
 
     @staticmethod
+    def _sanitize_display_name(name):
+        """Remove newlines and excess whitespace from display names."""
+        if not name:
+            return name
+        # Replace newlines/carriage returns with spaces, collapse multiple spaces
+        import re
+        sanitized = re.sub(r'[\r\n]+', ' ', name)
+        sanitized = re.sub(r' +', ' ', sanitized)
+        return sanitized.strip()
+
+    @staticmethod
     def create(username, password, display_name):
         """Create a new user."""
         password_hash = generate_password_hash(password)
+        display_name = User._sanitize_display_name(display_name)
         user_id = execute_db(
             '''INSERT INTO users (username, password_hash, display_name)
                VALUES (?, ?, ?)''',
@@ -83,7 +95,7 @@ class User(UserMixin):
     def update_profile(self, display_name=None, tagline=None, color_theme=None, paw_style=None):
         """Update user profile."""
         if display_name:
-            self.display_name = display_name
+            self.display_name = User._sanitize_display_name(display_name)
         if tagline is not None:
             self.tagline = tagline
         if color_theme:

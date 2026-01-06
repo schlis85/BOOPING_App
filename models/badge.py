@@ -7,7 +7,7 @@ from models.boop import get_boop_count
 # Starter paws everyone gets
 STARTER_PAWS = ['default', 'cat', 'sparkle', 'heart', 'moon']
 
-# All available paws and how to unlock them
+# All available paws and how to unlock them (all based on boops GIVEN)
 ALL_PAWS = {
     'default': {'emoji': '🐾', 'unlock': 'starter'},
     'cat': {'emoji': '🐱', 'unlock': 'starter'},
@@ -17,8 +17,8 @@ ALL_PAWS = {
     'ghost': {'emoji': '👻', 'unlock': 'Send 100 boops'},
     'fire': {'emoji': '🔥', 'unlock': 'Send 1,000 boops'},
     'rainbow': {'emoji': '🌈', 'unlock': 'Send 10,000 boops'},
-    'star': {'emoji': '⭐', 'unlock': 'Receive 100 boops'},
-    'galaxy': {'emoji': '🌌', 'unlock': 'Receive 10,000 boops'},
+    'star': {'emoji': '⭐', 'unlock': 'Send 100 boops'},
+    'galaxy': {'emoji': '🌌', 'unlock': 'Send 10,000 boops'},
     'skeleton': {'emoji': '💀', 'unlock': 'Secret'},
     'alien': {'emoji': '👽', 'unlock': 'Secret'},
     'robot': {'emoji': '🤖', 'unlock': 'Secret'},
