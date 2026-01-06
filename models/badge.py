@@ -25,6 +25,7 @@ ALL_PAWS = {
     'sun': {'emoji': '☀️', 'unlock': 'Secret'},
     'lightning': {'emoji': '⚡', 'unlock': 'Secret'},
     'snowflake': {'emoji': '❄️', 'unlock': 'Secret'},
+    'frog': {'emoji': '🐸', 'unlock': 'Exclusive'},
 }
 
 
@@ -52,6 +53,13 @@ def get_unlocked_paws(user_id):
     for badge in badges:
         if badge['unlocks_paw'] and badge['unlocks_paw'] not in paws:
             paws.append(badge['unlocks_paw'])
+
+    # Exclusive frog paw for user 'frog'
+    from models.user import User
+    user = User.get_by_id(user_id)
+    if user and user.username == 'frog':
+        paws.append('frog')
+
     return paws
 
 

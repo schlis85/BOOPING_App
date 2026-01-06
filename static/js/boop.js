@@ -21,7 +21,8 @@ const pawEmojis = {
     'moon': '🌙',
     'sun': '☀️',
     'lightning': '⚡',
-    'snowflake': '❄️'
+    'snowflake': '❄️',
+    'frog': '🐸'
 };
 
 // Check if user was active recently
