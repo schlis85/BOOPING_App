@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}BOOPING - Home{% endblock %}
+
+{% block content %}
+<div class="app-container">
+    <header class="app-header">
+        <div class="header-left">
+            <h1 class="logo">BOOPING</h1>
+            <span class="beta-badge">BETA</span>
+        </div>
+        <div class="header-center">
+            <div class="global-counter" id="global-counter">
+                <span class="counter-number" id="total-boops">...</span>
+                <span class="counter-label">total boops</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="my-card" style="--user-color: {{ current_user.color_theme }}">
+                <span class="my-name">{{ current_user.display_name }}</span>
+                <span class="my-stats" id="my-stats"></span>
+            </div>
+            <a href="{{ url_for('main.profile') }}" class="btn btn-small">Profile</a>
+            <a href="{{ url_for('auth.logout') }}" class="btn btn-small btn-secondary">Logout</a>
+        </div>
+    </header>
+
+    <!-- New boops banner (hidden by default) -->
+    <div class="new-boops-banner" id="new-boops-banner" style="display: none;" onclick="toggleNewBoopsPanel()">
+        <span id="new-boops-count">0</span> new boops while you were away! Click to see who booped you.
+    </div>
+
+    <!-- New boops panel (hidden by default) -->
+    <div class="new-boops-panel" id="new-boops-panel" style="display: none;">
+        <h3>Recent Boops</h3>
+        <div id="new-boops-list"></div>
+        <button class="btn btn-small" onclick="dismissNewBoops()">Got it!</button>
+    </div>
+
+    <main class="main-content">
+        <!-- Favorites Section -->
+        <section class="user-section" id="favorites-section" style="display: none;">
+            <h2 class="section-title">⭐ Favorites</h2>
+            <div class="user-list" id="favorites-list"></div>
+        </section>
+
+        <!-- Boop Buddies Section (mutual boops) -->
+        <section class="user-section" id="mutuals-section" style="display: none;">
+            <h2 class="section-title">🤝 Boop Buddies</h2>
+            <div class="user-list" id="mutuals-list"></div>
+        </section>
+
+        <!-- Everyone Else -->
+        <section class="user-section" id="everyone-section">
+            <h2 class="section-title">👥 Everyone</h2>
+            <div class="user-list" id="user-list">
+                <div class="loading">Loading boopers...</div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Notification area for incoming boops -->
+    <div class="notifications" id="notifications"></div>
+
+    <!-- Paw animation container -->
+    <div class="paw-container" id="paw-container"></div>
+</div>
+
+<script src="{{ url_for('static', filename='js/socket.js') }}"></script>
+<script src="{{ url_for('static', filename='js/boop.js') }}"></script>
+<script>
+    // Current user's paw style for animations
+    const myPawStyle = "{{ current_user.paw_style }}";
+
+    // Initialize the app
+    document.addEventListener('DOMContentLoaded', () => {
+        initSocket();
+        loadUsers();
+        loadGlobalStats();
+        loadMyStats();
+        loadNewBoops();
+    });
+
+    function toggleNewBoopsPanel() {
+        const panel = document.getElementById('new-boops-panel');
+        panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+    }
+
+    async function dismissNewBoops() {
+        // Mark boops as seen by updating last_login
+        const response = await fetch('/api/users/me/seen', { method: 'POST' });
+        if (response.ok) {
+            document.getElementById('new-boops-banner').style.display = 'none';
+            document.getElementById('new-boops-panel').style.display = 'none';
+        }
+    }
+</script>
+{% endblock %}

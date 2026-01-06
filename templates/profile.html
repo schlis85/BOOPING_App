@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+
+{% block title %}BOOPING - Profile{% endblock %}
+
+{% block content %}
+<div class="profile-page">
+    <header class="profile-header">
+        <a href="{{ url_for('main.home') }}" class="back-link">&larr; Back to booping</a>
+        <h1>Your Profile</h1>
+    </header>
+
+    <div class="profile-content">
+        <div class="profile-card" style="--user-color: {{ current_user.color_theme }}">
+            <div class="profile-preview">
+                <h2 class="display-name">{{ current_user.display_name }}</h2>
+            </div>
+        </div>
+
+        <div class="profile-stats">
+            <div class="stat">
+                <span class="stat-number">{{ boops_sent }}</span>
+                <span class="stat-label">Boops Sent</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">{{ boops_received }}</span>
+                <span class="stat-label">Boops Received</span>
+            </div>
+        </div>
+
+        <form class="profile-form" id="profile-form">
+            <div class="form-group">
+                <label for="display_name">Display Name</label>
+                <textarea id="display_name" name="display_name" maxlength="500" rows="4" required>{{ current_user.display_name }}</textarea>
+                <small>Get creative! Use multiple lines, ASCII art, symbols, emojis.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="color_theme">Card Color</label>
+                <input type="color" id="color_theme" name="color_theme"
+                       value="{{ current_user.color_theme }}">
+            </div>
+
+            <div class="form-group">
+                <label>Paw Style</label>
+                <div class="paw-selector" id="paw-selector">
+                    <!-- Paw options loaded via JS -->
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+
+        <div class="badges-section">
+            <h3>Badges</h3>
+            <div class="badges-list" id="badges-list">
+                <!-- Badges loaded via JS -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .paw-option.locked {
+        opacity: 0.4;
+        cursor: not-allowed;
+        position: relative;
+    }
+    .paw-option.locked::after {
+        content: '🔒';
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        font-size: 0.8rem;
+    }
+    .paw-option .unlock-hint {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        margin-top: 4px;
+    }
+</style>
+
+<script>
+    const currentPaw = "{{ current_user.paw_style }}";
+
+    // Load ALL paws with unlock status
+    fetch('/api/users/me/all-paws')
+        .then(r => r.json())
+        .then(paws => {
+            const selector = document.getElementById('paw-selector');
+            selector.innerHTML = paws.map(paw => {
+                const isSelected = paw.name === currentPaw;
+                const lockedClass = paw.unlocked ? '' : 'locked';
+                const hint = paw.unlock_hint && paw.unlock_hint !== 'starter'
+                    ? `<span class="unlock-hint">${paw.unlock_hint}</span>`
+                    : '';
+
+                return `
+                    <label class="paw-option ${isSelected ? 'selected' : ''} ${lockedClass}">
+                        <input type="radio" name="paw_style" value="${paw.name}"
+                               ${isSelected ? 'checked' : ''}
+                               ${paw.unlocked ? '' : 'disabled'}>
+                        <span class="paw-icon">${paw.emoji}</span>
+                        <span class="paw-name">${paw.name}</span>
+                        ${hint}
+                    </label>
+                `;
+            }).join('');
+        });
+
+    // Load badges
+    fetch('/api/users/me/badges')
+        .then(r => r.json())
+        .then(badges => {
+            const list = document.getElementById('badges-list');
+            if (badges.length === 0) {
+                list.innerHTML = '<p class="no-badges">No badges yet. Get booping!</p>';
+            } else {
+                list.innerHTML = badges.map(b => `
+                    <div class="badge">
+                        <span class="badge-icon">${b.icon}</span>
+                        <span class="badge-name">${b.name}</span>
+                        <span class="badge-desc">${b.description}</span>
+                    </div>
+                `).join('');
+            }
+        });
+
+    // Save profile
+    document.getElementById('profile-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+
+        submitBtn.textContent = 'Saving...';
+        submitBtn.disabled = true;
+
+        const selectedPaw = form.querySelector('input[name="paw_style"]:checked');
+        const data = {
+            display_name: form.display_name.value,
+            color_theme: form.color_theme.value,
+            paw_style: selectedPaw ? selectedPaw.value : currentPaw
+        };
+
+        try {
+            const response = await fetch('/api/users/me', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                // Update preview
+                document.querySelector('.display-name').textContent = data.display_name;
+                document.querySelector('.profile-card').style.setProperty('--user-color', data.color_theme);
+
+                // Visual feedback
+                submitBtn.textContent = 'Saved!';
+                submitBtn.style.background = 'linear-gradient(180deg, #00ff00 0%, #00cc00 100%)';
+
+                setTimeout(() => {
+                    submitBtn.textContent = originalText;
+                    submitBtn.style.background = '';
+                    submitBtn.disabled = false;
+                }, 2000);
+            } else {
+                throw new Error('Save failed');
+            }
+        } catch (err) {
+            submitBtn.textContent = 'Error!';
+            submitBtn.style.background = 'linear-gradient(180deg, #ff0000 0%, #cc0000 100%)';
+            setTimeout(() => {
+                submitBtn.textContent = originalText;
+                submitBtn.style.background = '';
+                submitBtn.disabled = false;
+            }, 2000);
+        }
+    });
+
+    // Paw selection (only for unlocked paws)
+    document.getElementById('paw-selector').addEventListener('click', (e) => {
+        const option = e.target.closest('.paw-option');
+        if (option && !option.classList.contains('locked')) {
+            document.querySelectorAll('.paw-option').forEach(o => o.classList.remove('selected'));
+            option.classList.add('selected');
+            option.querySelector('input').checked = true;
+        }
+    });
+</script>
+{% endblock %}
