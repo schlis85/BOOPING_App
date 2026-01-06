@@ -56,8 +56,13 @@ def register_socket_events(socketio):
         # Check for new badges
         new_badges = check_and_award_badges(current_user.id)
 
-        # Confirm boop was sent (include stats for sender only)
+        # Get updated stats
         stats = get_global_stats()
+
+        # Broadcast updated global stats to everyone
+        emit('global_stats_update', stats, broadcast=True)
+
+        # Confirm boop was sent
         emit('boop_sent', {
             'success': True,
             'recipient_id': recipient_id,

@@ -690,6 +690,10 @@ a:hover {
 .notification-text {
     font-weight: 500;
     font-size: 1.1rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 6em;
+    overflow: hidden;
 }
 
 .notification-sender {
