@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_active TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_login TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CHECK(length(display_name) <= 500),
+    CHECK(length(display_name) <= 50),
     CHECK(length(tagline) <= 300)
 );
 

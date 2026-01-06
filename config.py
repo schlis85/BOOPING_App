@@ -11,5 +11,5 @@ class Config:
     MAX_BOOPS_PER_MINUTE = 10
 
     # User constraints
-    MAX_DISPLAY_NAME_LENGTH = 500
+    MAX_DISPLAY_NAME_LENGTH = 50
     MAX_TAGLINE_LENGTH = 300

@@ -31,9 +31,19 @@ def get_current_user():
 def update_profile():
     """Update current user profile."""
     data = request.get_json()
+
+    # Validate lengths
+    display_name = data.get('display_name')
+    if display_name and len(display_name) > 50:
+        return jsonify({'error': 'Display name must be 50 characters or less'}), 400
+
+    tagline = data.get('tagline')
+    if tagline and len(tagline) > 300:
+        return jsonify({'error': 'Tagline must be 300 characters or less'}), 400
+
     current_user.update_profile(
-        display_name=data.get('display_name'),
-        tagline=data.get('tagline'),
+        display_name=display_name,
+        tagline=tagline,
         color_theme=data.get('color_theme'),
         paw_style=data.get('paw_style')
     )

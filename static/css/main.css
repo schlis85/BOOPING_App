@@ -374,11 +374,14 @@ a:hover {
 .my-name {
     font-weight: 600;
     color: var(--user-color, var(--accent-color));
-    white-space: pre;
+    white-space: nowrap;
     font-size: 0.8rem;
     font-family: 'VT323', monospace;
     display: block;
     line-height: 1.1;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .my-stats {
@@ -615,8 +618,10 @@ a:hover {
     font-size: 1.1rem;
     font-weight: 600;
     margin-bottom: 5px;
-    white-space: pre-wrap;
-    word-break: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
     color: var(--user-color, var(--text-color));
     text-shadow: 0 0 5px var(--user-color, var(--accent-color));
     line-height: 1.2;
@@ -727,7 +732,12 @@ a:hover {
 .profile-preview .display-name {
     font-size: 1.5rem;
     margin-bottom: 10px;
-    white-space: pre-wrap;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
     color: var(--user-color, var(--text-color));
     text-shadow: 0 0 10px var(--user-color, var(--accent-color));
     font-family: 'VT323', monospace;
