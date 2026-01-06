@@ -50,8 +50,8 @@ def register():
         flash('Password must be at least 4 characters', 'error')
         return redirect(url_for('auth.login'))
 
-    if len(display_name) > 50:
-        flash('Display name must be 50 characters or less', 'error')
+    if len(display_name) > 200:
+        flash('Display name must be 200 characters or less', 'error')
         return redirect(url_for('auth.login'))
 
     # Check if username exists

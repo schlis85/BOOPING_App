@@ -34,8 +34,8 @@ def update_profile():
 
     # Validate lengths
     display_name = data.get('display_name')
-    if display_name and len(display_name) > 50:
-        return jsonify({'error': 'Display name must be 50 characters or less'}), 400
+    if display_name and len(display_name) > 200:
+        return jsonify({'error': 'Display name must be 200 characters or less'}), 400
 
     tagline = data.get('tagline')
     if tagline and len(tagline) > 300:

@@ -30,8 +30,8 @@
         <form class="profile-form" id="profile-form">
             <div class="form-group">
                 <label for="display_name">Display Name</label>
-                <input type="text" id="display_name" name="display_name" maxlength="50" required value="{{ current_user.display_name }}">
-                <small>50 characters max - emojis welcome!</small>
+                <textarea id="display_name" name="display_name" maxlength="200" rows="4" required>{{ current_user.display_name }}</textarea>
+                <small>Max 5 lines × 40 chars - ASCII art, emojis welcome!</small>
             </div>
 
             <div class="form-group">

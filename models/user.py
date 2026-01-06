@@ -53,14 +53,20 @@ class User(UserMixin):
 
     @staticmethod
     def _sanitize_display_name(name):
-        """Remove newlines and excess whitespace from display names."""
+        """Constrain display names to reasonable dimensions."""
         if not name:
             return name
-        # Replace newlines/carriage returns with spaces, collapse multiple spaces
         import re
-        sanitized = re.sub(r'[\r\n]+', ' ', name)
-        sanitized = re.sub(r' +', ' ', sanitized)
-        return sanitized.strip()
+        # Normalize line endings
+        sanitized = name.replace('\r\n', '\n').replace('\r', '\n')
+        # Limit to 5 lines max
+        lines = sanitized.split('\n')[:5]
+        # Limit each line to 40 characters
+        lines = [line[:40] for line in lines]
+        # Remove trailing empty lines
+        while lines and not lines[-1].strip():
+            lines.pop()
+        return '\n'.join(lines)
 
     @staticmethod
     def create(username, password, display_name):
