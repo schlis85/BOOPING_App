@@ -42,7 +42,10 @@ def register_socket_events(socketio):
         # Create the boop
         boop_id = create_boop(current_user.id, recipient_id, paw_style)
 
-        # Notify the recipient
+        # Get updated stats (do this before notifying so recipient sees new count)
+        stats = get_global_stats()
+
+        # Notify the recipient (include stats so their counter updates)
         emit('boop_received', {
             'sender': {
                 'id': current_user.id,
@@ -50,14 +53,12 @@ def register_socket_events(socketio):
                 'color_theme': current_user.color_theme,
                 'paw_style': paw_style
             },
-            'boop_id': boop_id
+            'boop_id': boop_id,
+            'global_stats': stats
         }, room=f'user_{recipient_id}')
 
         # Check for new badges
         new_badges = check_and_award_badges(current_user.id)
-
-        # Get updated stats
-        stats = get_global_stats()
 
         # Broadcast updated global stats to everyone
         emit('global_stats_update', stats, broadcast=True)
