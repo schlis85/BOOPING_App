@@ -23,7 +23,7 @@ def create_app():
     app.config.from_object(Config)
 
     # Initialize extensions
-    socketio.init_app(app, cors_allowed_origins="*")
+    socketio.init_app(app, cors_allowed_origins="*", async_mode='eventlet')
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
 
