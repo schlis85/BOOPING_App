@@ -11,7 +11,7 @@ from flask import Flask
 from flask_socketio import SocketIO
 from flask_login import LoginManager
 from config import Config
-from database.db import init_db, check_db_initialized
+from database.db import init_db, check_db_initialized, run_migrations
 
 # Initialize extensions
 socketio = SocketIO()
@@ -51,6 +51,7 @@ def create_app():
         if not check_db_initialized():
             init_db()
             print("Database initialized!")
+        run_migrations()
 
     return app
 

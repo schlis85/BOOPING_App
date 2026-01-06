@@ -133,5 +133,23 @@ def check_db_initialized():
         return False
 
 
+def run_migrations():
+    """Run any necessary database migrations."""
+    if not USE_POSTGRES:
+        return
+
+    with get_db() as conn:
+        cur = conn.cursor()
+        try:
+            # Update display_name constraint from 50 to 200 chars
+            cur.execute("ALTER TABLE users DROP CONSTRAINT IF EXISTS users_display_name_check")
+            cur.execute("ALTER TABLE users ADD CONSTRAINT users_display_name_check CHECK (length(display_name) <= 200)")
+            conn.commit()
+            print("Database migrations completed.")
+        except Exception as e:
+            print(f"Migration note: {e}")
+            conn.rollback()
+
+
 if __name__ == '__main__':
     init_db()
