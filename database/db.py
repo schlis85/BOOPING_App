@@ -106,9 +106,17 @@ def init_db():
         if USE_POSTGRES:
             cur = conn.cursor()
             with open(SCHEMA_PATH.replace('.sql', '_postgres.sql'), 'r') as f:
-                cur.execute(f.read())
+                schema = f.read()
+            # Execute each statement separately for PostgreSQL
+            for statement in schema.split(';'):
+                statement = statement.strip()
+                if statement and not statement.startswith('--'):
+                    try:
+                        cur.execute(statement)
+                    except Exception as e:
+                        print(f"Warning: {e}")
             conn.commit()
-            print(f"PostgreSQL database initialized!")
+            print("PostgreSQL database initialized!")
         else:
             with open(SCHEMA_PATH, 'r') as f:
                 conn.executescript(f.read())

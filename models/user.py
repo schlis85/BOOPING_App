@@ -56,7 +56,6 @@ class User(UserMixin):
         """Constrain display names to reasonable dimensions."""
         if not name:
             return name
-        import re
         # Normalize line endings
         sanitized = name.replace('\r\n', '\n').replace('\r', '\n')
         # Limit to 5 lines max
