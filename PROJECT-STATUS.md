@@ -79,7 +79,7 @@ Unlocked by sending boops (not receiving - healthier incentive):
 - Boop Philanthropist (100,000 boops) - unlocks galaxy paw
 
 ### Rate Limiting
-- 60 boops per minute (may be adjusted based on usage)
+- 200 boops per minute (may be adjusted based on usage)
 
 ### New Boops Banner
 When you log in, shows who booped you since your last visit, aggregated by sender.
