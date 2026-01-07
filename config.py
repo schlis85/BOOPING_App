@@ -8,8 +8,8 @@ class Config:
     DATABASE_PATH = os.path.join(os.path.dirname(__file__), 'database', 'booping.db')
 
     # Rate limiting
-    # NOTE: 60/minute is a starting point - will likely need tuning based on usage
-    MAX_BOOPS_PER_MINUTE = 60
+    # NOTE: Will likely need tuning based on usage
+    MAX_BOOPS_PER_MINUTE = 200
 
     # User constraints (5 lines × 40 chars = 200)
     MAX_DISPLAY_NAME_LENGTH = 200
