@@ -114,7 +114,15 @@ def init_db():
                     try:
                         cur.execute(statement)
                     except Exception as e:
-                        print(f"Warning: {e}")
+                        # Don't swallow errors - log them clearly
+                        # Only ignore "already exists" type errors
+                        error_msg = str(e).lower()
+                        if 'already exists' in error_msg or 'duplicate' in error_msg:
+                            print(f"Note (safe to ignore): {e}")
+                        else:
+                            print(f"ERROR in init_db: {e}")
+                            print(f"Failed statement: {statement[:100]}...")
+                            raise  # Re-raise non-ignorable errors
             conn.commit()
             print("PostgreSQL database initialized!")
         else:
@@ -145,10 +153,39 @@ def run_migrations():
             cur.execute("ALTER TABLE users DROP CONSTRAINT IF EXISTS users_display_name_check")
             cur.execute("ALTER TABLE users ADD CONSTRAINT users_display_name_check CHECK (length(display_name) <= 200)")
             conn.commit()
-            print("Database migrations completed.")
         except Exception as e:
-            print(f"Migration note: {e}")
+            print(f"Migration note (constraint): {e}")
             conn.rollback()
+
+        # Badge seeding/update migration - ensures badges exist with correct thresholds
+        try:
+            badge_data = [
+                ('First Boop', 'Sent your first boop!', 1, '🐾', None),
+                ('Booper', 'Sent 100 boops', 100, '🐾🐾', 'sparkle'),
+                ('Super Booper', 'Sent 1,000 boops', 1000, '✨🐾', 'ghost'),
+                ('Boop Master', 'Sent 10,000 boops', 10000, '👑🐾', 'fire'),
+                ('Boop Legend', 'Sent 100,000 boops', 100000, '🌟👑🐾', 'rainbow'),
+                ('Generous Soul', 'Sent 1,000 boops', 1000, '💯', 'star'),
+                ('Boop Giver', 'Sent 10,000 boops', 10000, '🌟', 'heart'),
+                ('Boop Philanthropist', 'Sent 100,000 boops', 100000, '💖', 'galaxy'),
+            ]
+            for name, desc, threshold, icon, paw in badge_data:
+                cur.execute('''
+                    INSERT INTO badges (name, description, threshold, icon, unlocks_paw)
+                    VALUES (%s, %s, %s, %s, %s)
+                    ON CONFLICT (name) DO UPDATE SET
+                        description = EXCLUDED.description,
+                        threshold = EXCLUDED.threshold,
+                        icon = EXCLUDED.icon,
+                        unlocks_paw = EXCLUDED.unlocks_paw
+                ''', (name, desc, threshold, icon, paw))
+            conn.commit()
+            print("Badge migration completed - badges seeded/updated.")
+        except Exception as e:
+            print(f"Badge migration error: {e}")
+            conn.rollback()
+
+        print("Database migrations completed.")
 
 
 if __name__ == '__main__':

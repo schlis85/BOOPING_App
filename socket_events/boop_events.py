@@ -3,9 +3,10 @@
 
 from flask_socketio import emit, join_room, leave_room
 from flask_login import current_user
-from models.boop import create_boop, get_global_stats
+from models.boop import create_boop, get_global_stats, get_user_boops_last_minute
 from models.badge import check_and_award_badges
 from models.user import User
+from config import Config
 
 
 def register_socket_events(socketio):
@@ -37,6 +38,12 @@ def register_socket_events(socketio):
         # Verify recipient exists
         recipient = User.get_by_id(recipient_id)
         if not recipient:
+            return
+
+        # Rate limiting check
+        recent_boops = get_user_boops_last_minute(current_user.id)
+        if recent_boops >= Config.MAX_BOOPS_PER_MINUTE:
+            emit('boop_error', {'message': 'Slow down! Too many boops.'})
             return
 
         # Create the boop

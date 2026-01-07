@@ -1,6 +1,6 @@
 # BOOPING App - Project Status
 
-**Last updated:** January 6, 2026
+**Last updated:** January 7, 2026
 **Created by:** Claude Opus 4.5
 
 ## What Is This?
@@ -42,33 +42,44 @@ See `booping-lore.md` for the full history of why 142 million people pressed a b
 - Cyan glow = active in last hour
 
 ### Paw Styles
-Users can unlock different paw emojis by sending boops:
-- 🐾 Default (start)
-- ✨ Sparkle (10 boops)
-- 👻 Ghost (25 boops)
-- 🔥 Fire (50 boops)
-- 🌈 Rainbow (75 boops)
-- ⭐ Star (100 boops)
-- 💖 Heart (150 boops)
-- 🌌 Galaxy (200 boops)
-- 💀 Skeleton (300 boops)
-- 👽 Alien (500 boops)
-- 🤖 Robot (750 boops)
-- 🐱 Cat (1000 boops)
-- 🌙 Moon (1500 boops)
-- ☀️ Sun (2000 boops)
-- ⚡ Lightning (3000 boops)
-- ❄️ Snowflake (5000 boops)
-- 🐸 Frog (EXCLUSIVE - username "frog" only)
+**Starters** (everyone gets these):
+- 🐾 Default
+- 🐱 Cat
+- ✨ Sparkle
+- 💖 Heart
+- 🌙 Moon
+
+**Earned by sending boops** (thresholds are high - unlocks should feel earned!):
+- 👻 Ghost (1,000 boops)
+- ⭐ Star (1,000 boops)
+- 🔥 Fire (10,000 boops)
+- 🌈 Rainbow (100,000 boops)
+- 🌌 Galaxy (100,000 boops)
+
+**Secret paws** (hidden unlock conditions):
+- 💀 Skeleton
+- 👽 Alien
+- 🤖 Robot
+- ☀️ Sun
+- ⚡ Lightning
+- ❄️ Snowflake
+
+**Exclusive:**
+- 🐸 Frog (username "frog" only)
 
 ### Badges
 Unlocked by sending boops (not receiving - healthier incentive):
-- First Boop (1)
-- Getting Started (10)
-- Friendly (25)
-- Popular (50)
-- Boop Master (100)
-- And more...
+- First Boop (1 boop)
+- Booper (100 boops) - unlocks sparkle paw
+- Super Booper (1,000 boops) - unlocks ghost paw
+- Generous Soul (1,000 boops) - unlocks star paw
+- Boop Master (10,000 boops) - unlocks fire paw
+- Boop Giver (10,000 boops) - unlocks heart paw
+- Boop Legend (100,000 boops) - unlocks rainbow paw
+- Boop Philanthropist (100,000 boops) - unlocks galaxy paw
+
+### Rate Limiting
+- 60 boops per minute (may be adjusted based on usage)
 
 ### New Boops Banner
 When you log in, shows who booped you since your last visit, aggregated by sender.
@@ -139,6 +150,7 @@ These limits exist because kids will absolutely try to put 500 vertical characte
 | Jan 1, 2026 | Initial build - core booping, badges, paw styles |
 | Jan 5, 2026 | Phase 2 - favorites, boop buddies, activity indicators, deployment |
 | Jan 6, 2026 | Polish - exploit fixes, PostgreSQL, exclusive frog paw, socket debugging |
+| Jan 7, 2026 | Audit fixes - badge seeding, rate limiting (60/min), threshold increase (x10) |
 
 ## Thread Summaries
 

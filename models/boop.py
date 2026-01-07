@@ -1,7 +1,7 @@
 # Boop model for BOOPING App
 # Created by Claude Opus 4.5
 
-from database.db import query_db, execute_db
+from database.db import query_db, execute_db, USE_POSTGRES
 from datetime import datetime
 
 
@@ -47,11 +47,16 @@ def get_new_boops_since(user_id, since_timestamp):
     """Get boops received since a specific timestamp."""
     if since_timestamp is None:
         # If no last_login, show recent boops (last 24 hours) as "new"
+        # Use database-specific datetime syntax
+        if USE_POSTGRES:
+            time_filter = "NOW() - INTERVAL '1 day'"
+        else:
+            time_filter = "datetime('now', '-1 day')"
         return query_db(
-            '''SELECT b.*, u.display_name as sender_name, u.color_theme as sender_color, u.paw_style as sender_paw
+            f'''SELECT b.*, u.display_name as sender_name, u.color_theme as sender_color, u.paw_style as sender_paw
                FROM boops b
                JOIN users u ON b.sender_id = u.id
-               WHERE b.recipient_id = ? AND b.created_at > datetime('now', '-1 day')
+               WHERE b.recipient_id = ? AND b.created_at > {time_filter}
                ORDER BY b.created_at DESC''',
             (user_id,)
         )
@@ -103,3 +108,16 @@ def get_global_stats():
             'last_updated': result['last_updated']
         }
     return {'total_boops': 0, 'total_users': 0, 'last_updated': None}
+
+
+def get_user_boops_last_minute(user_id):
+    """Count boops sent by user in the last minute (for rate limiting)."""
+    if USE_POSTGRES:
+        time_filter = "NOW() - INTERVAL '1 minute'"
+    else:
+        time_filter = "datetime('now', '-1 minute')"
+    result = query_db(
+        f'SELECT COUNT(*) as count FROM boops WHERE sender_id = ? AND created_at > {time_filter}',
+        (user_id,), one=True
+    )
+    return result['count'] if result else 0

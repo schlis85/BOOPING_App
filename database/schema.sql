@@ -83,12 +83,13 @@ CREATE TABLE IF NOT EXISTS global_stats (
 INSERT OR IGNORE INTO global_stats (id, total_boops, total_users) VALUES (1, 0, 0);
 
 -- Seed badges (all rewards are for boops GIVEN, not received)
+-- Thresholds are intentionally high to make unlocks feel earned
 INSERT OR IGNORE INTO badges (name, description, threshold, icon, unlocks_paw) VALUES
     ('First Boop', 'Sent your first boop!', 1, '🐾', NULL),
-    ('Booper', 'Sent 10 boops', 10, '🐾🐾', 'sparkle'),
-    ('Super Booper', 'Sent 100 boops', 100, '✨🐾', 'ghost'),
-    ('Boop Master', 'Sent 1,000 boops', 1000, '👑🐾', 'fire'),
-    ('Boop Legend', 'Sent 10,000 boops', 10000, '🌟👑🐾', 'rainbow'),
-    ('Generous Soul', 'Sent 100 boops', 100, '💯', 'star'),
-    ('Boop Giver', 'Sent 1,000 boops', 1000, '🌟', 'heart'),
-    ('Boop Philanthropist', 'Sent 10,000 boops', 10000, '💖', 'galaxy');
+    ('Booper', 'Sent 100 boops', 100, '🐾🐾', 'sparkle'),
+    ('Super Booper', 'Sent 1,000 boops', 1000, '✨🐾', 'ghost'),
+    ('Boop Master', 'Sent 10,000 boops', 10000, '👑🐾', 'fire'),
+    ('Boop Legend', 'Sent 100,000 boops', 100000, '🌟👑🐾', 'rainbow'),
+    ('Generous Soul', 'Sent 1,000 boops', 1000, '💯', 'star'),
+    ('Boop Giver', 'Sent 10,000 boops', 10000, '🌟', 'heart'),
+    ('Boop Philanthropist', 'Sent 100,000 boops', 100000, '💖', 'galaxy');
