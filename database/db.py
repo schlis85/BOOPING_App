@@ -86,8 +86,10 @@ def execute_db(query, args=()):
         if USE_POSTGRES:
             cur = conn.cursor()
             # Handle RETURNING for INSERT statements
+            # Skip for user_badges which has composite key, no id column
             if 'INSERT' in query.upper() and 'RETURNING' not in query.upper():
-                query = query.rstrip(';') + ' RETURNING id'
+                if 'user_badges' not in query.lower():
+                    query = query.rstrip(';') + ' RETURNING id'
             cur.execute(query, args)
             conn.commit()
             if cur.description:
