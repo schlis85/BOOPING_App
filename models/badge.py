@@ -20,12 +20,12 @@ ALL_PAWS = {
     'rainbow': {'emoji': '🌈', 'unlock': 'Send 2,000 boops'},
     'star': {'emoji': '⭐', 'unlock': 'Send 4,000 boops'},
     'galaxy': {'emoji': '🌌', 'unlock': 'Send 10,000 boops'},
-    'skeleton': {'emoji': '💀', 'unlock': 'Secret'},
-    'alien': {'emoji': '👽', 'unlock': 'Secret'},
-    'robot': {'emoji': '🤖', 'unlock': 'Secret'},
-    'sun': {'emoji': '☀️', 'unlock': 'Secret'},
-    'lightning': {'emoji': '⚡', 'unlock': 'Secret'},
-    'snowflake': {'emoji': '❄️', 'unlock': 'Secret'},
+    'skeleton': {'emoji': '💀', 'unlock': 'Send 10,001 boops'},
+    'alien': {'emoji': '👽', 'unlock': 'Send 12,000 boops'},
+    'robot': {'emoji': '🤖', 'unlock': 'Send 14,000 boops'},
+    'sun': {'emoji': '☀️', 'unlock': 'Send 16,000 boops'},
+    'lightning': {'emoji': '⚡', 'unlock': 'Send 18,000 boops'},
+    'snowflake': {'emoji': '❄️', 'unlock': 'Send 20,001 boops'},
     'frog': {'emoji': '🐸', 'unlock': 'Exclusive'},
 }
 

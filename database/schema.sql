@@ -92,4 +92,10 @@ INSERT OR IGNORE INTO badges (name, description, threshold, icon, unlocks_paw) V
     ('Boop Legend', 'Sent 2,000 boops', 2000, '🌟👑🐾', 'rainbow'),
     ('Generous Soul', 'Sent 4,000 boops', 4000, '💯', 'star'),
     ('Boop Giver', 'Sent 10,000 boops', 10000, '🌟', 'heart'),
-    ('Boop Philanthropist', 'Sent 10,000 boops', 10000, '💖', 'galaxy');
+    ('Boop Philanthropist', 'Sent 10,000 boops', 10000, '💖', 'galaxy'),
+    ('Spooky Booper', 'Sent 10,001 boops', 10001, '💀', 'skeleton'),
+    ('Extraterrestrial', 'Sent 12,000 boops', 12000, '👽', 'alien'),
+    ('Mechanical Mind', 'Sent 14,000 boops', 14000, '🤖', 'robot'),
+    ('Solar Flare', 'Sent 16,000 boops', 16000, '☀️', 'sun'),
+    ('Thunder Strike', 'Sent 18,000 boops', 18000, '⚡', 'lightning'),
+    ('Frozen Heart', 'Sent 20,001 boops', 20001, '❄️', 'snowflake');
