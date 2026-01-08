@@ -88,8 +88,8 @@ INSERT OR IGNORE INTO badges (name, description, threshold, icon, unlocks_paw) V
     ('First Boop', 'Sent your first boop!', 1, '🐾', NULL),
     ('Booper', 'Sent 100 boops', 100, '🐾🐾', 'sparkle'),
     ('Super Booper', 'Sent 200 boops', 200, '✨🐾', 'ghost'),
-    ('Boop Master', 'Sent 10,000 boops', 10000, '👑🐾', 'fire'),
-    ('Boop Legend', 'Sent 100,000 boops', 100000, '🌟👑🐾', 'rainbow'),
-    ('Generous Soul', 'Sent 1,000 boops', 1000, '💯', 'star'),
+    ('Boop Master', 'Sent 1,000 boops', 1000, '👑🐾', 'fire'),
+    ('Boop Legend', 'Sent 2,000 boops', 2000, '🌟👑🐾', 'rainbow'),
+    ('Generous Soul', 'Sent 4,000 boops', 4000, '💯', 'star'),
     ('Boop Giver', 'Sent 10,000 boops', 10000, '🌟', 'heart'),
-    ('Boop Philanthropist', 'Sent 100,000 boops', 100000, '💖', 'galaxy');
+    ('Boop Philanthropist', 'Sent 10,000 boops', 10000, '💖', 'galaxy');
