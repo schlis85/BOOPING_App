@@ -87,7 +87,7 @@ INSERT OR IGNORE INTO global_stats (id, total_boops, total_users) VALUES (1, 0, 
 INSERT OR IGNORE INTO badges (name, description, threshold, icon, unlocks_paw) VALUES
     ('First Boop', 'Sent your first boop!', 1, '🐾', NULL),
     ('Booper', 'Sent 100 boops', 100, '🐾🐾', 'sparkle'),
-    ('Super Booper', 'Sent 1,000 boops', 1000, '✨🐾', 'ghost'),
+    ('Super Booper', 'Sent 200 boops', 200, '✨🐾', 'ghost'),
     ('Boop Master', 'Sent 10,000 boops', 10000, '👑🐾', 'fire'),
     ('Boop Legend', 'Sent 100,000 boops', 100000, '🌟👑🐾', 'rainbow'),
     ('Generous Soul', 'Sent 1,000 boops', 1000, '💯', 'star'),

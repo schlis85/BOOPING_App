@@ -15,7 +15,7 @@ ALL_PAWS = {
     'sparkle': {'emoji': '✨', 'unlock': 'starter'},
     'heart': {'emoji': '💖', 'unlock': 'starter'},
     'moon': {'emoji': '🌙', 'unlock': 'starter'},
-    'ghost': {'emoji': '👻', 'unlock': 'Send 1,000 boops'},
+    'ghost': {'emoji': '👻', 'unlock': 'Send 200 boops'},
     'fire': {'emoji': '🔥', 'unlock': 'Send 10,000 boops'},
     'rainbow': {'emoji': '🌈', 'unlock': 'Send 100,000 boops'},
     'star': {'emoji': '⭐', 'unlock': 'Send 1,000 boops'},
